@@ -1,0 +1,493 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    overflow: hidden;
+}
+
+/* 固定 1920x1080 画布 */
+#app {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: 0 0;
+    background-color: #050a15;
+    background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    color: #fff;
+    font-family: 'Microsoft YaHei', sans-serif;
+    overflow: hidden;
+}
+
+/* 顶部标题栏 */
+header {
+    height: 80px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="80" viewBox="0 0 1920 80"><path d="M0,0 L1920,0 L1920,50 L1300,50 L1250,80 L670,80 L620,50 L0,50 Z" fill="rgba(10, 30, 60, 0.9)" stroke="%2300d2ff" stroke-width="2"/></svg>') no-repeat center top;
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    pointer-events: none; /* 让鼠标事件穿透 */
+}
+
+header h1 {
+    margin-top: -10px;
+    font-size: 36px;
+    letter-spacing: 8px;
+    color: #fff;
+    text-shadow: 0 0 10px #00d2ff, 0 0 20px #00d2ff;
+    font-weight: bold;
+    background: linear-gradient(to bottom, #fff, #00d2ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.date-time {
+    position: absolute;
+    right: 50px;
+    top: 20px;
+    font-size: 18px;
+    color: #00d2ff;
+    font-family: 'Consolas', monospace;
+    text-shadow: 0 0 5px #00d2ff;
+}
+
+/* 全屏地图容器 */
+.map-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: #1a1a2e;
+}
+
+/* Leaflet 地图背景 */
+.leaflet-container {
+    background: #0a0a1a !important;
+}
+
+/* 瓦片滤镜：明亮瓦片调暗为科技风 */
+.leaflet-tile-pane {
+    filter: brightness(0.35) contrast(1.3) saturate(0.6);
+}
+
+/* 村庄标签样式 */
+.village-label {
+    background: rgba(0, 0, 0, 0.75) !important;
+    border: 1px solid #00d2ff !important;
+    color: #ffd700 !important;
+    font-weight: bold !important;
+    font-size: 13px !important;
+    padding: 3px 8px !important;
+    border-radius: 3px !important;
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.5) !important;
+}
+
+.county-label {
+    font-size: 15px !important;
+    background: rgba(0, 210, 255, 0.2) !important;
+    border: 2px solid #00d2ff !important;
+    color: #fff !important;
+}
+
+/* 悬浮面板通用样式 */
+.panel-box {
+    position: relative;
+    background: rgba(10, 20, 40, 0.7);
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.1) inset;
+    padding: 15px;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+    /* 切角效果 */
+    clip-path: polygon(
+        15px 0, 100% 0, 
+        100% calc(100% - 15px), calc(100% - 15px) 100%, 
+        0 100%, 0 15px
+    );
+}
+
+/* 装饰性边角 */
+.panel-box::before, .panel-box::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #00d2ff;
+    transition: all 0.3s;
+    pointer-events: none;
+}
+
+.panel-box::before {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+}
+
+.panel-box::after {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+}
+
+.panel-box h2 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    color: #00d2ff;
+    padding-left: 15px;
+    border-left: 4px solid #00d2ff;
+    background: linear-gradient(90deg, rgba(0, 210, 255, 0.2), transparent);
+    line-height: 1.5;
+}
+
+/* 左侧面板 */
+.left-panel {
+    position: absolute;
+    left: 20px;
+    top: 100px;
+    bottom: 20px;
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    pointer-events: none; /* 容器穿透 */
+}
+
+.left-panel > * {
+    pointer-events: auto; /* 子元素恢复交互 */
+}
+
+.announcement-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.fund-flow-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 右侧面板 */
+.right-panel {
+    position: absolute;
+    right: 20px;
+    top: 100px;
+    bottom: 20px;
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    pointer-events: none;
+}
+
+.right-panel > * {
+    pointer-events: auto;
+}
+
+.chart-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 顶部统计卡片 */
+.top-stats {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 40px;
+    z-index: 100;
+}
+
+.stat-card {
+    background: rgba(0, 210, 255, 0.1);
+    border: 1px solid #00d2ff;
+    padding: 10px 30px;
+    text-align: center;
+    transform: skewX(-15deg); /* 倾斜效果 */
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+}
+
+.stat-card > * {
+    transform: skewX(15deg); /* 内容反向倾斜 */
+}
+
+.stat-card h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #fff;
+    opacity: 0.8;
+}
+
+.stat-card .number {
+    margin: 5px 0 0;
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffd700;
+    font-family: 'Impact', sans-serif;
+    letter-spacing: 2px;
+}
+
+.stat-card .unit {
+    font-size: 12px;
+    color: #fff;
+    margin-left: 5px;
+}
+
+/* 列表样式优化 */
+.content-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.announcement-item {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.announcement-item:hover {
+    background: rgba(0, 210, 255, 0.2);
+    padding-left: 20px;
+}
+
+.announcement-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 0;
+    background: #00d2ff;
+    transition: height 0.3s;
+}
+
+.announcement-item:hover::before {
+    height: 70%;
+}
+
+.announcement-title {
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.announcement-date {
+    color: #00d2ff;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+/* 资金流水样式 */
+.scroll-container {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.fund-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    animation: scrollUp 25s linear infinite;
+}
+
+.fund-item {
+    padding: 10px;
+    margin-bottom: 5px;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 2px solid transparent;
+}
+
+.fund-item:hover {
+    border-left-color: #ffd700;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.fund-amount {
+    font-family: 'Consolas', monospace;
+    font-weight: bold;
+    color: #00ff88;
+}
+
+.fund-amount.negative {
+    color: #ff4444;
+}
+
+@keyframes scrollUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+}
+
+/* 图表容器 */
+.chart {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+}
+
+/* Leaflet 自定义弹窗 (仿参考图) */
+.custom-popup .leaflet-popup-content-wrapper {
+    background: rgba(10, 20, 40, 0.9);
+    border: 1px solid #00d2ff;
+    border-radius: 0;
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+    color: #fff;
+    padding: 0;
+}
+
+.custom-popup .leaflet-popup-tip {
+    background: rgba(10, 20, 40, 0.9);
+    border: 1px solid #00d2ff;
+    border-top: none;
+    border-left: none;
+}
+
+.popup-header {
+    background: rgba(0, 210, 255, 0.2);
+    padding: 8px 15px;
+    border-bottom: 1px solid #00d2ff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-title {
+    color: #00d2ff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.popup-status {
+    font-size: 12px;
+    background: #00d2ff;
+    color: #000;
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+
+.popup-body {
+    padding: 15px;
+}
+
+.popup-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.popup-label {
+    color: #aaa;
+}
+
+.popup-value {
+    color: #fff;
+    font-weight: bold;
+}
+
+.popup-value.highlight {
+    color: #00d2ff;
+}
+
+/* 模态框 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal[style*="block"] {
+    display: flex !important;
+}
+
+.modal-content {
+    width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 30px;
+    position: relative;
+    color: #ccc;
+}
+
+.modal-content .close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    color: #00d2ff;
+    cursor: pointer;
+}
+
+/* 模态框优化 */
+.modal-content {
+    background: rgba(10, 20, 40, 0.95);
+    border: 1px solid #00d2ff;
+    box-shadow: 0 0 50px rgba(0, 210, 255, 0.3);
+    border-radius: 0;
+    clip-path: polygon(
+        20px 0, 100% 0, 
+        100% calc(100% - 20px), calc(100% - 20px) 100%, 
+        0 100%, 0 20px
+    );
+}
+
+.modal-content h2 {
+    color: #00d2ff;
+    border-bottom: 1px solid rgba(0, 210, 255, 0.3);
+    padding-bottom: 15px;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #00d2ff;
+    border-radius: 3px;
+}
