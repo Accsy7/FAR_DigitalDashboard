@@ -113,10 +113,12 @@ const fundFlows = [
 ];
 
 // ====== 资产构成数据 ======
-const assetData = [
-    { value: 1048, name: '经营性资产' },
-    { value: 735, name: '非经营性资产' },
-    { value: 580, name: '资源性资产' }
+const expenseData = [
+    { value: 285, name: '基础设施' },      // 道路、水利、公共设施
+    { value: 192, name: '公益事业' },      // 教育、文化、卫生
+    { value: 153, name: '管理费用' },      // 办公、人员、差旅
+    { value: 98, name: '生产投入' },       // 农业生产、产业扶持
+    { value: 62, name: '社会保障' }        // 扶贫、慰问、补贴
 ];
 
 // ====== 收支对比数据 ======

@@ -224,54 +224,55 @@ function initFundFlow() {
 
 // 5. 图表初始化 (ECharts)
 function initCharts() {
-    // 资产构成饼图
-    const assetChart = echarts.init(document.getElementById('assetChart'));
-    const assetOption = {
-        tooltip: {
-            trigger: 'item',
-            formatter: '{b}: {c} ({d}%)',
-            backgroundColor: 'rgba(10, 20, 40, 0.9)',
-            borderColor: '#00d2ff',
-            textStyle: { color: '#fff' }
-        },
-        legend: {
-            bottom: '0%',
-            left: 'center',
-            textStyle: { color: '#ccc', fontSize: 10 },
-            itemWidth: 10,
-            itemHeight: 10
-        },
-        color: ['#00d2ff', '#ffd700', '#00ff88'],
-        series: [
-            {
-                name: '资产构成',
-                type: 'pie',
-                radius: ['40%', '60%'],
-                center: ['50%', '40%'],
-                avoidLabelOverlap: false,
-                itemStyle: {
-                    borderRadius: 5,
-                    borderColor: '#0a192f',
-                    borderWidth: 2
-                },
+// 年度支出结构饼图（修改前：资产构成饼图）
+const expenseChart = echarts.init(document.getElementById('assetChart'));
+const expenseOption = {
+    tooltip: {
+        trigger: 'item',
+        formatter: '{b}: {c}万元 ({d}%)',
+        backgroundColor: 'rgba(10, 20, 40, 0.9)',
+        borderColor: '#00d2ff',
+        textStyle: { color: '#fff' }
+    },
+    legend: {
+        bottom: '0%',
+        left: 'center',
+        textStyle: { color: '#ccc', fontSize: 10 },
+        itemWidth: 10,
+        itemHeight: 10
+    },
+    color: ['#00d2ff', '#ffd700', '#00ff88', '#ff4444', '#aa66ff'], // 5种颜色
+    series: [
+        {
+            name: '年度支出结构',
+            type: 'pie',
+            radius: ['40%', '60%'],
+            center: ['50%', '40%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+                borderRadius: 5,
+                borderColor: '#0a192f',
+                borderWidth: 2
+            },
+            label: {
+                show: false,
+                position: 'center'
+            },
+            emphasis: {
                 label: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    label: {
-                        show: true,
-                        fontSize: 14,
-                        fontWeight: 'bold',
-                        color: '#fff'
-                    }
-                },
-                labelLine: { show: false },
-                data: assetData
-            }
-        ]
-    };
-    assetChart.setOption(assetOption);
+                    show: true,
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                    color: '#fff',
+                    formatter: '{b}\n{c}万元 ({d}%)'
+                }
+            },
+            labelLine: { show: false },
+            data: expenseData  // 使用新的支出数据
+        }
+    ]
+};
+expenseChart.setOption(expenseOption);
 
     // 年度收支柱状图
     const incomeChart = echarts.init(document.getElementById('incomeChart'));
