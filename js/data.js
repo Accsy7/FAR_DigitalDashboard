@@ -2,7 +2,7 @@
 const announcements = [
     {
         title: "关于加强农村集体三资管理的通知",
-        date: "2023-12-15",
+        date: "2024-12-15",
         content: `<p><b>各村集体经济组织：</b></p>
         <p>根据《农村集体经济组织财务制度》和上级有关文件精神，为进一步规范农村集体资金、资产、资源（以下简称"三资"）管理，保障农民群众合法权益，现将有关事项通知如下：</p>
         <p><b>一、加强资金管理。</b>严格执行财务收支审批制度，大额资金使用需经村民代表大会或村民会议讨论决定。</p>
@@ -11,27 +11,44 @@ const announcements = [
         <p><b>四、强化公开监督。</b>三资管理情况须定期向全体村民公开，接受群众监督。</p>`
     },
     {
-        title: "甲县A村集体采购公示（办公设备）",
-        date: "2023-12-10",
-        content: `<p><b>采购项目：</b>村委会办公设备更新</p>
-        <p><b>采购方式：</b>询价采购</p>
-        <p><b>采购清单：</b></p>
+        title: "甲县2025年度集体收益分配方案公示",
+        date: "2025-12-10",
+        content: `<p><b>分配依据：</b>根据《农村集体经济组织收益分配管理办法》和村民代表大会决议</p>
+        <p><b>2025年度集体总收益：</b>1,285,600 元</p>
+        <p><b>收益来源构成：</b></p>
         <table style="width:100%;border-collapse:collapse;color:#ccc;">
-            <tr style="border-bottom:1px solid #333;"><th style="text-align:left;padding:5px;">物品</th><th>数量</th><th>单价(元)</th><th>金额(元)</th></tr>
-            <tr style="border-bottom:1px solid #222;"><td style="padding:5px;">办公电脑</td><td style="text-align:center;">3台</td><td style="text-align:center;">4,500</td><td style="text-align:center;">13,500</td></tr>
-            <tr style="border-bottom:1px solid #222;"><td style="padding:5px;">打印机</td><td style="text-align:center;">1台</td><td style="text-align:center;">2,800</td><td style="text-align:center;">2,800</td></tr>
-            <tr style="border-bottom:1px solid #222;"><td style="padding:5px;">办公桌椅</td><td style="text-align:center;">5套</td><td style="text-align:center;">1,200</td><td style="text-align:center;">6,000</td></tr>
-            <tr><td style="padding:5px;"><b>合计</b></td><td></td><td></td><td style="text-align:center;"><b>22,300</b></td></tr>
+            <tr style="border-bottom:1px solid #333;"><th style="text-align:left;padding:5px;">收入项目</th><th>金额(元)</th><th>占比</th></tr>
+            <tr style="border-bottom:1px solid #222;"><td style="padding:5px;">土地流转租金</td><td style="text-align:center;">450,000</td><td style="text-align:center;">35.0%</td></tr>
+            <tr style="border-bottom:1px solid #222;"><td style="padding:5px;">集体产业分红</td><td style="text-align:center;">320,000</td><td style="text-align:center;">24.9%</td></tr>
+            <tr style="border-bottom:1px solid #222;"><td style="padding:5px;">上级财政补助</td><td style="text-align:center;">280,000</td><td style="text-align:center;">21.8%</td></tr>
+            <tr style="border-bottom:1px solid #222;"><td style="padding:5px;">资产租赁收入</td><td style="text-align:center;">150,000</td><td style="text-align:center;">11.7%</td></tr>
+            <tr style="border-bottom:1px solid #222;"><td style="padding:5px;">其他经营收入</td><td style="text-align:center;">85,600</td><td style="text-align:center;">6.6%</td></tr>
+            <tr><td style="padding:5px;"><b>合计</b></td><td style="text-align:center;"><b>1,285,600</b></td><td style="text-align:center;"><b>100%</b></td></tr>
         </table>
-        <p style="margin-top:10px;"><b>供应商：</b>XX办公设备有限公司</p>
-        <p><b>公示期：</b>2023年12月10日至12月17日</p>`
+
+        <p><b>分配方案：</b></p>
+        <ul style="margin-left:20px;color:#ccc;">
+            <li><b>公积金提取：</b>20%（257,120元）用于集体经济发展和风险储备</li>
+            <li><b>公益金提取：</b>15%（192,840元）用于村内公益事业</li>
+            <li><b>村民分红：</b>65%（835,640元）按股权份额分配</li>
+        </ul>
+
+        <p><b>分红标准：</b></p>
+        <ul style="margin-left:20px;color:#ccc;">
+            <li>总股数：4,178.2股</li>
+            <li>每股分红金额：200元</li>
+            <li>惠及农户：312户，1,245人</li>
+        </ul>
+
+        <p><b>发放时间：</b>2025年12月25日前完成</p>
+        <p><b>公示期：</b>2025年12月10日至12月17日</p>`
     },
     {
-        title: "2023年度财务审计报告公示",
-        date: "2023-11-20",
-        content: `<p><b>审计范围：</b>甲县所辖A村、B村、C村、D村、E村、F村、G村2023年度集体财务收支</p>
+        title: "2025年度财务审计报告公示",
+        date: "2025-11-20",
+        content: `<p><b>审计范围：</b>甲县所辖A村、B村、C村、D村、E村、F村、G村2025年度集体财务收支</p>
         <p><b>审计结论：</b></p>
-        <p>经审计，各村集体经济组织2023年度财务收支基本合规，账目清晰。主要审计结果如下：</p>
+        <p>经审计，各村集体经济组织2025年度财务收支基本合规，账目清晰。主要审计结果如下：</p>
         <ul style="margin-left:20px;color:#ccc;">
             <li>集体总收入 89,456 万元，同比增长 8.3%</li>
             <li>集体总支出 76,230 万元，同比增长 5.1%</li>
@@ -41,8 +58,8 @@ const announcements = [
     },
     {
         title: "关于土地流转收益分配的通知",
-        date: "2023-11-05",
-        content: `<p>经甲县村民代表大会讨论通过，现将2023年度土地流转收益分配方案公示如下：</p>
+        date: "2025-11-05",
+        content: `<p>经甲县村民代表大会讨论通过，现将2025年度土地流转收益分配方案公示如下：</p>
         <p><b>流转面积：</b>1,200亩</p>
         <p><b>流转收益：</b>总计96万元</p>
         <p><b>分配方案：</b></p>
@@ -51,12 +68,12 @@ const announcements = [
             <li>村民分红 70%（67.2万元）按人口均等分配</li>
             <li>惠及村民 1,680 人，人均分红 400 元</li>
         </ul>
-        <p><b>发放时间：</b>2023年12月底前完成</p>`
+        <p><b>发放时间：</b>2025年12月底前完成</p>`
     },
     {
         title: "村集体资产年度清查结果公示",
-        date: "2023-10-28",
-        content: `<p>根据上级要求，甲县已完成2023年度集体资产清查工作，结果如下：</p>
+        date: "2025-10-28",
+        content: `<p>根据上级要求，甲县已完成2025年度集体资产清查工作，结果如下：</p>
         <p><b>资产总额：</b>1,234,567 万元</p>
         <p><b>其中：</b></p>
         <ul style="margin-left:20px;color:#ccc;">
@@ -68,14 +85,14 @@ const announcements = [
     },
     {
         title: "B村集体采购公示（路灯工程）",
-        date: "2023-10-15",
+        date: "2025-10-15",
         content: `<p><b>项目名称：</b>B村主干道太阳能路灯安装工程</p>
         <p><b>项目预算：</b>18.5 万元</p>
         <p><b>采购方式：</b>公开招标</p>
         <p><b>中标单位：</b>XX照明工程有限公司</p>
         <p><b>工程内容：</b>安装太阳能路灯50盏，覆盖主干道全长2.5公里</p>
         <p><b>工期：</b>30天</p>
-        <p><b>公示期：</b>2023年10月15日至10月22日</p>`
+        <p><b>公示期：</b>2025年10月15日至10月22日</p>`
     }
 ];
 
@@ -104,7 +121,7 @@ const assetData = [
 
 // ====== 收支对比数据 ======
 const incomeData = {
-    years: ['2019', '2020', '2021', '2022', '2023'],
+    years: ['2021', '2022', '2023', '2024', '2025'],
     income: [120, 132, 101, 134, 90],
     expense: [98, 102, 91, 114, 76]
 };

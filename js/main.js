@@ -163,7 +163,7 @@ function addVillageMarkers(map) {
                 </div>
                 <div class="popup-row">
                     <span class="popup-label">数据更新</span>
-                    <span class="popup-value">2023-12-31</span>
+                    <span class="popup-value">2025-12-31</span>
                 </div>
             </div>
         `;
