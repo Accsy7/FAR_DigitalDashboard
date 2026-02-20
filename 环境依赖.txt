@@ -7,10 +7,12 @@
   1. Python 3.6+（仅用于启动本地 HTTP 服务器）
      - 使用 Python 标准库 http.server，无需安装任何第三方包
      - 验证方式：命令行输入 python --version
+     - 服务器端口：自动寻找空闲端口（8000-8100范围），非固定端口
 
   2. Microsoft Edge 浏览器（或 Chrome）
      - 推荐版本：Edge 90+
      - 分辨率：1920 × 1080
+     - 缓存处理：修改代码后按 Ctrl+Shift+R 强制刷新页面
 
 【Python 标准库依赖（无需额外安装）】
 
@@ -65,5 +67,28 @@
 
   - 首次部署：需要联网下载前端库、地图瓦片和 GeoJSON 数据
   - 日常运行：完全脱网，无需互联网连接
+
+【开发注意事项】
+
+  1. HTML语法检查
+     - 编辑HTML文件时确保标签完整性，特别是：
+       * <meta>标签的content属性值需完整（如 content="width=device-width, initial-scale=1.0"）
+       * 所有标签需正确闭合，属性值需用引号包裹
+     - 建议使用VS Code等专业编辑器，开启语法高亮
+     - 修改前备份文件：`cp index.html index.html.backup`（Linux/Mac）或复制文件（Windows）
+
+  2. 浏览器缓存处理
+     - 修改代码后按 Ctrl+Shift+R（Windows/Linux）或 Cmd+Shift+R（Mac）强制刷新
+     - 或按F12打开开发者工具 → 网络选项卡 → 勾选"禁用缓存"
+
+  3. 文件路径检查
+     - 地图瓦片路径：确保 `assets/tiles/{z}/{x}/{y}.png` 目录结构正确
+     - GeoJSON数据路径：确保 `data/bama.json` 等文件存在
+     - 前端库路径：确保 `lib/` 目录包含完整库文件
+
+  4. 常见问题排查
+     - 地图显示不全：检查浏览器控制台（F12）是否有HTML语法错误
+     - 页面布局异常：检查HTML结构是否完整，CSS是否加载
+     - 图表不显示：检查 `lib/echarts.min.js` 是否正确加载
 
 =============================================
